@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './scss/app.scss';
+
 import Header from './components/Header';
 import Categories from './components/Categories';
 import Sort from './components/Sort';
 import PizzaBlock from './components/PizzaBlock';
-import pizzas from './data/pizzas.json';
+import fetchData from './components/api/fetchData';
 
 function App() {
+  const [items, setItems] = useState([]);
+  useEffect(() => {
+    fetchData(setItems);
+  }, []);
+
   return (
     <div className="wrapper">
-      <Header />
       <div className="content">
+        <Header />
         <div className="container">
           <div className="content__top">
             <Categories />
@@ -18,7 +24,7 @@ function App() {
           </div>
           <h2 className="content__title">Все пиццы</h2>
           <div className="content__items">
-            {pizzas.map((pizza) => (
+            {items.map((pizza) => (
               <PizzaBlock key={pizza.id} {...pizza} />
             ))}
           </div>
