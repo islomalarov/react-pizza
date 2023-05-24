@@ -12,20 +12,32 @@ body {
   height: 100%;
   background-color: #fff;
   margin: 0 auto;
-  border-radius: 10px;
 }
 
 .content {
   padding: 40px 0;
 
   &__title {
-    margin: 35px 0;
+    font-weight: 800;
+    font-size: 38px;
+    margin: 60px 0 50px;
   }
 
   &__items {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 60px 30px;
+    align-items: center;
+    gap: 20px;
+
+    @media (max-width: 1400px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    @media (max-width: 1060px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    @media (max-width: 730px) {
+      grid-template-columns: repeat(1, 1fr);
+    }
   }
 
   &__top {
@@ -33,6 +45,7 @@ body {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: space-between;
+    align-items: center;
   }
 }
 
@@ -47,6 +60,11 @@ body {
 }
 
 .cart {
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
   &__top {
     display: flex;
     justify-content: space-between;
@@ -104,20 +122,18 @@ body {
 
   &__item {
     display: flex;
-    width: 100%;
+    flex-wrap: wrap;
+    justify-content: space-between;
     border-top: 1px solid $gray-line;
-    padding-top: 30px;
-    margin-top: 30px;
+    padding: 10px;
 
     &-img {
       display: flex;
       align-items: center;
       margin-right: 15px;
-      width: 10%;
 
       img {
-        width: 80px;
-        height: 80px;
+        width: 200px;
       }
     }
 
@@ -125,7 +141,6 @@ body {
       display: flex;
       flex-direction: column;
       justify-content: center;
-      width: 40%;
 
       h3 {
         font-weight: bold;
@@ -143,8 +158,8 @@ body {
     &-count {
       display: flex;
       align-items: center;
+      gap: 10px;
       justify-content: space-between;
-      width: 13%;
 
       &-minus {
         svg {
@@ -163,10 +178,9 @@ body {
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 33%;
 
       b {
-        font-weight: bold;
+        margin: 10px;
         font-size: 22px;
         letter-spacing: 0.01em;
       }
@@ -176,7 +190,6 @@ body {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      width: 4%;
 
       .button {
         border-color: darken($color: $gray-line, $amount: 10);
