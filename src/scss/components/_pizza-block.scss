@@ -2,9 +2,9 @@
 
 .pizza-block {
   text-align: center;
-  grid-column: span 1;
   display: flex;
   flex-direction: column;
+  gap: 20px;
   justify-content: space-between;
   padding: 5px;
 
@@ -18,8 +18,7 @@
   &__title {
     font-size: 20px;
     font-weight: 900;
-    letter-spacing: 1%;
-    margin-bottom: 20px;
+    flex-basis: 20%;
   }
 
   &__selector {
@@ -54,8 +53,6 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 20px;
-    margin-top: 20px;
   }
 
   &__price {
