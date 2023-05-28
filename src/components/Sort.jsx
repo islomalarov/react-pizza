@@ -1,19 +1,23 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { setSortType } from '../redux/slices/filterSlice';
 
-const Sort = ({ sortType, setSortType }) => {
+const list = [
+  { name: 'популярности(по убыв.)', sort: 'rating', type: 'desc' },
+  { name: 'популярности(по возр.)', sort: 'rating', type: 'asc' },
+  { name: 'цене(по убыв.)', sort: 'price', type: 'desc' },
+  { name: 'цене(по возр.)', sort: 'price', type: 'asc' },
+  { name: 'алфавиту(по убыв.)', sort: 'title', type: 'desc' },
+  { name: 'алфавиту(по возр.)', sort: 'title', type: 'asc' },
+];
+
+const Sort = ({ sortType }) => {
+  const dispatch = useDispatch();
   const [openSortSelect, setOpenSortSelect] = useState(false);
-  const list = [
-    { name: 'популярности(по убыв.)', sort: 'rating', type: 'desc' },
-    { name: 'популярности(по возр.)', sort: 'rating', type: 'asc' },
-    { name: 'цене(по убыв.)', sort: 'price', type: 'desc' },
-    { name: 'цене(по возр.)', sort: 'price', type: 'asc' },
-    { name: 'алфавиту(по убыв.)', sort: 'title', type: 'desc' },
-    { name: 'алфавиту(по возр.)', sort: 'title', type: 'asc' },
-  ];
 
   function onClickSortName(obj) {
     setOpenSortSelect(!openSortSelect);
-    setSortType(obj);
+    dispatch(setSortType(obj));
   }
   return (
     <div className="sort">
@@ -39,7 +43,7 @@ const Sort = ({ sortType, setSortType }) => {
               <li
                 key={obj.name}
                 onClick={() => onClickSortName(obj)}
-                className={sortType.name === obj.name ? 'active' : ''}>
+                className={sortType.name === obj.name && 'active'}>
                 {obj.name}
               </li>
             ))}
