@@ -11,7 +11,7 @@ const list = [
   { name: 'алфавиту(по возр.)', sort: 'title', type: 'asc' },
 ];
 
-const Sort = ({ sortType }) => {
+const Sort = ({ sort }) => {
   const dispatch = useDispatch();
   const [openSortSelect, setOpenSortSelect] = useState(false);
 
@@ -34,7 +34,7 @@ const Sort = ({ sortType }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenSortSelect(!openSortSelect)}>{sortType.name}</span>
+        <span onClick={() => setOpenSortSelect(!openSortSelect)}>{sort.name}</span>
       </div>
       {openSortSelect && (
         <div className="sort__popup">
@@ -43,7 +43,7 @@ const Sort = ({ sortType }) => {
               <li
                 key={obj.name}
                 onClick={() => onClickSortName(obj)}
-                className={sortType.name === obj.name && 'active'}>
+                className={sort.name === obj.name && 'active'}>
                 {obj.name}
               </li>
             ))}
