@@ -1,27 +1,36 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import fetchData from '../api/fetchData';
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import Pagination from '../components/Pagination';
 import { setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas } from '../redux/slices/pizzasSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  const { searchValue } = useSelector((state) => state.searchReducer);
   const { categoryId, sort, currentPage } = useSelector((state) => state.filterReducer);
-  const [items, setItems] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { searchValue } = useSelector((state) => state.searchReducer);
+  const { items, status } = useSelector((state) => state.pizzasReducer);
+
   const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
+  async function fetchData(category, sort, searchValue, currentPage) {
+    const cat = category > 0 ? `&category=${category}` : '';
+    const search = searchValue ? `&search=${searchValue}` : '';
+    const API = `https://6454d733a74f994b334a6d83.mockapi.io/items?page=${currentPage}&limit=4${cat}${search}&sortBy=${sort.property}&order=${sort.type}`;
+
+    dispatch(fetchPizzas(API));
+    window.scrollTo(0, 0);
+  }
   // Если изменили параметры и был первый рендер
   useEffect(() => {
     if (isMounted.current) {
@@ -51,7 +60,7 @@ const Home = () => {
   // Если был первый рендер, то запрашиваем пиццы.
   useEffect(() => {
     if (!isSearch.current) {
-      fetchData(setItems, setIsLoading, categoryId, sort, searchValue, currentPage);
+      fetchData(categoryId, sort, searchValue, currentPage);
     }
     isSearch.current = false;
   }, [categoryId, sort, searchValue, currentPage]);
@@ -63,7 +72,13 @@ const Home = () => {
         <Sort sort={sort} />
       </div>
       <h2 className="content__title">Все пиццы</h2>
-      <div className="content__items">{isLoading ? skeleton : pizzas}</div>
+      {status === 'failed' ? (
+        <div>
+          <h1>Uppppsss!</h1>
+        </div>
+      ) : (
+        <div className="content__items">{status === 'loading' ? skeleton : pizzas}</div>
+      )}
       <Pagination />
     </>
   );
