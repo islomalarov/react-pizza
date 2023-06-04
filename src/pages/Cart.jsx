@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import CartItem from '../components/Cart';
 import { useDispatch, useSelector } from 'react-redux';
-import { clearItems } from '../redux/slices/cartSlice';
+import { clearItems, selectCart } from '../redux/slices/cartSlice';
 import CartEmpty from '../components/Cart/CartEmpty';
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { totalCount, totalPrice, items } = useSelector((state) => state.cartReducer);
+  const { totalCount, totalPrice, items } = useSelector(selectCart);
 
   function buyOrder() {
     alert(`Ваш заказ на сумму ${totalPrice} ₽ оформлен!`);

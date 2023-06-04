@@ -7,8 +7,9 @@ import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
 import PizzaBlock from '../components/PizzaBlock';
 import Pagination from '../components/Pagination';
-import { setFilters } from '../redux/slices/filterSlice';
-import { fetchPizzas } from '../redux/slices/pizzasSlice';
+import { selectFilter, setFilters } from '../redux/slices/filterSlice';
+import { fetchPizzas, selectPizzas } from '../redux/slices/pizzasSlice';
+import { selectSearch } from '../redux/slices/searchSlice';
 
 const Home = () => {
   const dispatch = useDispatch();
@@ -16,9 +17,9 @@ const Home = () => {
 
   const isSearch = useRef(false);
   const isMounted = useRef(false);
-  const { categoryId, sort, currentPage } = useSelector((state) => state.filterReducer);
-  const { searchValue } = useSelector((state) => state.searchReducer);
-  const { items, status } = useSelector((state) => state.pizzasReducer);
+  const { categoryId, sort, currentPage } = useSelector(selectFilter);
+  const { searchValue } = useSelector(selectSearch);
+  const { items, status } = useSelector(selectPizzas);
 
   const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
