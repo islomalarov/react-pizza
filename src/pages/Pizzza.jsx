@@ -1,21 +1,21 @@
 import axios from 'axios';
 import React from 'react';
-import { useEffect } from 'react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { addItem, selectCartItemById } from '../redux/slices/cartSlice';
 import { useDispatch, useSelector } from 'react-redux';
 
 const typesName = ['тонкое', 'традиционное'];
 const Pizzza = () => {
-  const { id } = useParams();
-  const [pizza, setPizza] = useState();
-  const cartItem = useSelector(selectCartItemById(id));
-  const [activeType, setActiveType] = useState(0);
-  const [activeSize, setActiveSize] = useState(0);
-  const addedCount = cartItem ? cartItem.count : 0;
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const { id } = useParams();
+  const cartItem = useSelector(selectCartItemById(id));
+  const addedCount = cartItem ? cartItem.count : 0;
+  const [pizza, setPizza] = useState();
+  const [activeType, setActiveType] = useState(0);
+  const [activeSize, setActiveSize] = useState(0);
 
   const onClickAdd = () => {
     const item = {
@@ -29,7 +29,7 @@ const Pizzza = () => {
     dispatch(addItem(item));
   };
   useEffect(() => {
-    async function getPizza() {
+    async function getPizza(id) {
       try {
         const { data } = await axios.get(`https://6454d733a74f994b334a6d83.mockapi.io/items/${id}`);
         setPizza(data);
@@ -38,7 +38,7 @@ const Pizzza = () => {
         navigate('/');
       }
     }
-    getPizza();
+    getPizza(id);
   }, []);
 
   return !pizza ? (
