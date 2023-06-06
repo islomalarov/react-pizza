@@ -1,15 +1,20 @@
 import Cart from '../pages/Cart';
 import Home from '../pages/Home';
 import NotFound from '../pages/NotFound';
+import Pizzza from '../pages/Pizzza';
 
 export const routes = [
   {
-    path: '/',
+    path: '',
     element: <Home />,
   },
   {
-    path: '/cart',
+    path: 'cart',
     element: <Cart />,
+  },
+  {
+    path: 'pizza/:id',
+    element: <Pizzza />,
   },
   {
     path: '*',

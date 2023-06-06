@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Categories from '../components/Categories';
 import Sort, { sortList } from '../components/Sort';
 import Skeleton from '../components/PizzaBlock/Skeleton';
@@ -21,7 +21,7 @@ const Home = () => {
   const { searchValue } = useSelector(selectSearch);
   const { items, status } = useSelector(selectPizzas);
 
-  const pizzas = items.map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />);
+  const pizzas = items.map((pizza) => <PizzaBlock {...pizza} key={pizza.id} />);
   const skeleton = [...new Array(4)].map((_, index) => <Skeleton key={index} />);
 
   async function fetchData(category, sort, searchValue, currentPage) {

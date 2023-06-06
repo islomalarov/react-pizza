@@ -1,23 +1,18 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './scss/app.scss';
-import Header from './components/Header';
 import { routes } from './routes/router';
+import MainLayout from './layouts/MainLayout';
 
 function App() {
   return (
-    <div className="wrapper">
-      <Header />
-      <div className="content">
-        <div className="container">
-          <Routes>
-            {routes.map(({ path, element }, index) => (
-              <Route path={path} element={element} key={index} />
-            ))}
-          </Routes>
-        </div>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        {routes.map(({ path, element }, index) => (
+          <Route path={path} element={element} key={index} />
+        ))}
+      </Route>
+    </Routes>
   );
 }
 
